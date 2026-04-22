@@ -1,0 +1,325 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Business Empire Neon Full Fixed</title>
+<style>
+:root{
+  --text:#edf4ff; --muted:#9fb0c8; --line:rgba(255,255,255,.10);
+  --blue1:#1f6fff; --blue2:#52b8ff; --green:#5af07e; --gold:#ffbe4b; --red:#ff5c72; --purple:#9b6bff;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{
+  margin:0;color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Arial,sans-serif;
+  background:
+    radial-gradient(circle at top center, rgba(32,110,255,.16), transparent 24%),
+    radial-gradient(circle at bottom right, rgba(82,184,255,.10), transparent 22%),
+    linear-gradient(180deg,#030914,#08101d 30%, #0b1424 100%);
+}
+.wrap{max-width:1080px;margin:0 auto;padding:12px 12px 175px}
+.card{
+  background:linear-gradient(180deg, rgba(18,29,49,.96), rgba(11,19,34,.96));
+  border:1px solid var(--line); border-radius:28px; box-shadow:0 18px 40px rgba(0,0,0,.35)
+}
+.topbar{display:grid;grid-template-columns:84px 1.2fr 1fr auto auto;gap:14px;align-items:center;padding:16px;margin-bottom:14px}
+.avatar{width:72px;height:72px;border-radius:50%;background:radial-gradient(circle at 30% 30%, #4f8cff, #1a2e51 70%);border:2px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:30px}
+.levelbox,.cashbox,.gembox,.notif{min-height:72px;border-radius:22px;background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;padding:10px 14px}
+.levelbox{display:block}
+.level-title{font-size:17px;font-weight:800}
+.progress{height:18px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.08);margin-top:12px;border:1px solid rgba(255,255,255,.08)}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue1),var(--blue2))}
+.cash-main{font-size:24px;font-weight:900;color:var(--green)}
+.cash-sub,.small-muted,.meta,.desc{font-size:13px;color:var(--muted);line-height:1.4}
+.gembox,.notif{font-size:18px;font-weight:800}
+.icon-pill{width:46px;height:46px;border-radius:16px;display:inline-flex;align-items:center;justify-content:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);margin-right:10px}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:14px}
+.stat{padding:18px 16px;min-height:110px}
+.stat .title{font-size:14px;color:var(--muted)}
+.stat .value{font-size:20px;font-weight:900;margin-top:8px}
+.event-bar{padding:16px 18px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.section{padding:16px;margin-bottom:14px}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.section-head h2{margin:0;font-size:20px}
+.pill-btn,.action-btn{
+  border:none;border-radius:14px;padding:10px 14px;color:#d8e7ff;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)
+}
+.action-btn{width:100%;padding:12px 12px;font-size:14px;font-weight:800;color:#fff;background:linear-gradient(90deg,#2b2f3b,#3c2d1c)}
+.action-btn.primary{background:linear-gradient(90deg,var(--blue1),var(--blue2))}
+.action-btn.red{background:linear-gradient(90deg,#792a33,#4e111c)}
+.action-btn:disabled,.pill-btn:disabled{opacity:.45}
+.screen{display:none}.screen.active{display:block}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.product,.task,.finance,.order,.log,.district,.upgrade{padding:14px;border-radius:22px;background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08)}
+.thumb{height:140px;border-radius:18px;margin-bottom:12px;background:linear-gradient(135deg,#1f304c,#0d1728);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:60px}
+.name{font-size:17px;font-weight:800}
+.mini-progress{height:10px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin:12px 0}
+.mini-progress span{display:block;height:100%;background:linear-gradient(90deg,var(--purple),#6d54ff)}
+.bottom-grid{display:grid;grid-template-columns:1.1fr 1.2fr 1fr;gap:14px;margin-bottom:16px}
+.stack{display:flex;flex-direction:column;gap:12px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.badge{padding:6px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.05);font-size:11px;font-weight:800}
+.scroll-x{display:flex;gap:12px;overflow:auto;padding-bottom:4px}
+.market-card,.review-card,.stock-card,.comp-card,.vip-card{min-width:240px;background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:14px}
+.spark{width:100%;height:48px;border-radius:10px;background:rgba(255,255,255,.04);margin-top:10px}
+canvas#chart{width:100%;height:180px;background:rgba(255,255,255,.03);border-radius:18px;border:1px solid rgba(255,255,255,.08)}
+.tabs{position:fixed;left:0;right:0;bottom:0;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(180deg, rgba(6,10,18,.04), rgba(6,10,18,.72) 18%, rgba(6,10,18,.90));backdrop-filter:blur(14px);z-index:50}
+.nav-card{max-width:1080px;margin:0 auto;border-radius:28px;padding:16px;background:linear-gradient(180deg, rgba(21,31,51,.96), rgba(13,21,36,.96));border:1px solid rgba(255,255,255,.12);box-shadow:0 16px 40px rgba(0,0,0,.38)}
+.nav-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.nav-btn{min-height:88px;border-radius:26px;border:1px solid rgba(255,255,255,.10);background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));color:var(--text);font-size:18px;font-weight:900;display:flex;align-items:center;justify-content:center;gap:10px}
+.nav-btn.active{background:linear-gradient(90deg,var(--blue1),var(--blue2));box-shadow:0 10px 28px rgba(31,111,255,.28)}
+.toast{position:fixed;left:50%;bottom:120px;transform:translateX(-50%) translateY(12px);opacity:0;pointer-events:none;z-index:80;background:rgba(8,14,24,.96);border:1px solid rgba(255,255,255,.10);border-radius:10px;padding:8px 10px;max-width:min(72vw,320px);text-align:center;box-shadow:0 10px 24px rgba(0,0,0,.28);transition:.22s ease;font-size:12px;line-height:1.25}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;align-items:flex-end;z-index:90}
+.modal.show{display:flex}
+.sheet{width:100%;max-width:100%;margin:0 auto;background:linear-gradient(180deg,#11233d,#0b1729);border-top:1px solid rgba(255,255,255,.12);border-radius:20px 20px 0 0;padding:14px 12px 16px;max-height:60vh;overflow:auto}
+.sheet-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.headline{font-size:18px;font-weight:900;margin-bottom:6px}
+input,select{width:100%;padding:10px 11px;border-radius:12px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.06);color:#fff;outline:none;font-size:13px}
+@media (max-width:980px){.topbar{grid-template-columns:72px 1fr;gap:12px}.stats-grid,.product-grid,.bottom-grid,.grid-2,.grid-3{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){.wrap{padding:10px 10px 205px}.stats-grid,.product-grid,.bottom-grid,.grid-2,.grid-3,.sheet-grid{grid-template-columns:1fr}.nav-grid{grid-template-columns:repeat(3,1fr)}.nav-btn{min-height:84px;font-size:17px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card topbar">
+    <div class="avatar" id="avatarBox">🦈</div>
+    <div class="levelbox">
+      <div class="level-title" id="levelTitle">Уровень 1</div>
+      <div class="progress"><span id="xpBar"></span></div>
+      <div class="small-muted" id="xpText">0 / 140</div>
+    </div>
+    <div class="cashbox">
+      <div>
+        <div class="cash-main" id="moneyMain">₽ 20 000</div>
+        <div class="cash-sub" id="cashSub">+₽ 0 / день</div>
+      </div>
+    </div>
+    <div class="gembox"><span class="icon-pill">⭐</span><span id="repBox">0</span></div>
+    <button class="notif action-btn primary" style="width:72px;padding:0" onclick="openSetup()">⚙️</button>
+  </div>
+
+  <div class="stats-grid">
+    <div class="card stat"><div class="title">День</div><div class="value" id="dayBox">1</div><div class="small-muted" id="seasonBox">Базовый спрос</div></div>
+    <div class="card stat"><div class="title">Рейтинг</div><div class="value" style="color:var(--gold)" id="ratingBox">3.0 ★</div><div class="small-muted" id="brandBox">Нет бренда</div></div>
+    <div class="card stat"><div class="title">Долг</div><div class="value" style="color:var(--red)" id="debtBox">₽ 0</div><div class="small-muted" id="debtDaysBox">Нет кредита</div></div>
+    <div class="card stat"><div class="title">Район</div><div class="value" id="districtBox">Нет</div><div class="small-muted" id="eventShortBox">Без события</div></div>
+  </div>
+
+  <div class="card event-bar">
+    <div><strong id="eventTitle">📊 Рынок спокоен</strong><div class="small-muted" id="eventDesc">Пока без горячих событий. Лови обычный спрос.</div></div>
+    <div class="small-muted" id="eventTimer">—</div>
+  </div>
+
+  <div id="screen-home" class="screen active">
+    <div class="card section">
+      <div class="section-head">
+        <h2>Товары для закупки</h2>
+        <button class="pill-btn" onclick="dailyChance()">Возможность дня</button>
+      </div>
+      <div class="product-grid" id="productsGrid"></div>
+    </div>
+
+    <div class="bottom-grid">
+      <div class="card section">
+        <div class="section-head"><h2>Заказы клиентов</h2><span class="badge" id="ordersCount">0</span></div>
+        <div class="stack" id="homeOrders"></div>
+      </div>
+
+      <div class="card section">
+        <div class="section-head"><h2>Ежедневные задачи</h2><button class="pill-btn" onclick="nextDay()">Следующий день</button></div>
+        <div class="stack" id="taskStack"></div>
+      </div>
+
+      <div class="card section">
+        <div class="section-head"><h2>Финансы</h2></div>
+        <div class="stack" id="financeSummary"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="screen-sales" class="screen">
+    <div class="card section">
+      <div class="section-head"><h2>Инвентарь</h2><span class="badge" id="inventoryCount">0</span></div>
+      <div class="product-grid" id="inventoryGrid"></div>
+    </div>
+    <div class="card section">
+      <div class="section-head"><h2>Активные объявления</h2><span class="badge" id="listingsCount">0</span></div>
+      <div class="product-grid" id="listingGrid"></div>
+    </div>
+  </div>
+
+  <div id="screen-market" class="screen">
+    <div class="card section">
+      <div class="section-head"><h2>Рынок акций</h2><button class="pill-btn" onclick="refreshMarketEvents(true)">Освежить рынок</button></div>
+      <canvas id="chart" width="760" height="180"></canvas>
+      <div style="height:10px"></div>
+      <div class="scroll-x" id="stocksList"></div>
+    </div>
+    <div class="grid-2">
+      <div class="card section">
+        <div class="section-head"><h2>Чёрный рынок</h2><span class="badge" id="blackCooldown">Доступен</span></div>
+        <div class="scroll-x" id="blackList"></div>
+      </div>
+      <div class="card section">
+        <div class="section-head"><h2>Аукционы</h2><span class="badge">Лоты</span></div>
+        <div class="scroll-x" id="auctionList"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="screen-city" class="screen">
+    <div class="card section">
+      <div class="section-head"><h2>Районы города</h2><span class="badge">Влияние на спрос</span></div>
+      <div class="grid-2" id="districtGrid"></div>
+    </div>
+    <div class="card section">
+      <div class="section-head"><h2>Доставка</h2><button class="pill-btn" onclick="collectPassive()">Собрать доход</button></div>
+      <div class="stack" id="deliveryInfo"></div>
+    </div>
+  </div>
+
+  <div id="screen-business" class="screen">
+    <div class="grid-2">
+      <div class="card section">
+        <div class="section-head"><h2>Улучшения бизнеса</h2><span class="badge">Рост</span></div>
+        <div class="stack" id="businessUpgrades"></div>
+      </div>
+      <div class="card section">
+        <div class="section-head"><h2>Команда</h2><span class="badge">Персонал</span></div>
+        <div class="stack" id="teamGrid"></div>
+      </div>
+    </div>
+    <div class="card section">
+      <div class="section-head"><h2>Операции</h2><span class="badge">Реклама и переговоры</span></div>
+      <div class="grid-2" id="opsGrid"></div>
+    </div>
+  </div>
+
+  <div id="screen-social" class="screen">
+    <div class="grid-2">
+      <div class="card section">
+        <div class="section-head"><h2>Отзывы</h2><span class="badge">Клиенты</span></div>
+        <div class="scroll-x" id="reviewsList"></div>
+      </div>
+      <div class="card section">
+        <div class="section-head"><h2>Конкуренты</h2><span class="badge">Давление</span></div>
+        <div class="scroll-x" id="compList"></div>
+      </div>
+    </div>
+    <div class="card section">
+      <div class="section-head"><h2>VIP-клиент</h2><span class="badge" id="vipStatus">Доступен</span></div>
+      <div class="scroll-x" id="vipList"></div>
+    </div>
+    <div class="card section">
+      <div class="section-head"><h2>Миссии</h2><span class="badge">Прогресс</span></div>
+      <div class="stack" id="missionList"></div>
+    </div>
+  </div>
+
+  <div id="screen-finance" class="screen">
+    <div class="grid-2">
+      <div class="card section">
+        <div class="section-head"><h2>Портфель</h2><span class="badge">Акции</span></div>
+        <div class="stack" id="portfolioList"></div>
+      </div>
+      <div class="card section">
+        <div class="section-head"><h2>Финансы</h2><span class="badge">Кредит</span></div>
+        <div class="stack" id="financeList"></div>
+      </div>
+    </div>
+    <div class="card section">
+      <div class="section-head"><h2>Лента событий</h2><span class="badge">История</span></div>
+      <div class="stack" id="newsList"></div>
+    </div>
+    <div class="card section">
+      <div class="section-head"><h2>Управление сейвом</h2><span class="badge">Локально</span></div>
+      <div class="grid-2">
+        <button class="action-btn" onclick="saveGame()">Сохранить</button>
+        <button class="action-btn" onclick="loadGame()">Загрузить</button>
+        <button class="action-btn" onclick="exportSave()">Экспорт</button>
+        <button class="action-btn red" onclick="resetGame()">Сбросить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="nav-card">
+    <div class="nav-grid">
+      <button class="nav-btn active" data-screen="home">🏠 Главная</button>
+      <button class="nav-btn" data-screen="sales">🛒 Продажи</button>
+      <button class="nav-btn" data-screen="market">🧺 Рынок+</button>
+      <button class="nav-btn" data-screen="city">🏙️ Город</button>
+      <button class="nav-btn" data-screen="business">💼 Бизнес</button>
+      <button class="nav-btn" data-screen="social">👥 Соц.</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="modal" id="setupModal">
+  <div class="sheet">
+    <div class="headline">Настрой стиль империи</div>
+    <div class="small-muted" style="margin-bottom:10px">Компактная панель снизу.</div>
+    <div class="sheet-grid">
+      <input id="brandInput" placeholder="Название бренда">
+      <select id="avatarSelect">
+        <option value="🦈">🦈 Акула</option>
+        <option value="🚀">🚀 Стартапер</option>
+        <option value="💼">💼 Бизнес</option>
+        <option value="😎">😎 Игрок</option>
+        <option value="👨‍💼">👨‍💼 Классика</option>
+      </select>
+    </div>
+    <div style="height:10px"></div>
+    <div class="sheet-grid">
+      <button class="action-btn primary" onclick="applySetup()">Применить</button>
+      <button class="action-btn" onclick="closeSetup()">Закрыть</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const G = window;
+function drawSpark(canvas,data){
+  const ctx=canvas.getContext('2d'), w=canvas.width, h=canvas.height;
+  ctx.clearRect(0,0,w,h);
+  const min=Math.min(...data), max=Math.max(...data), range=Math.max(1,max-min);
+  ctx.beginPath();
+  data.forEach((v,i)=>{
+    const x=(i/(data.length-1||1))*(w-8)+4;
+    const y=h-((v-min)/range)*(h-10)-5;
+    i?ctx.lineTo(x,y):ctx.moveTo(x,y);
+  });
+  ctx.lineWidth=2; ctx.strokeStyle='#58b6ff'; ctx.stroke();
+}
+function drawChart(){
+  const c=document.getElementById('chart'), ctx=c.getContext('2d');
+  const d1=game.stocks.TechCore.history, d2=game.stocks.CryptoX.history;
+  const all=d1.concat(d2), min=Math.min(...all), max=Math.max(...all), range=Math.max(1,max-min);
+  ctx.clearRect(0,0,c.width,c.height);
+  ctx.strokeStyle='rgba(255,255,255,.08)';
+  for(let i=1;i<4;i++){const y=i*(c.height/4); ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(c.width,y); ctx.stroke();}
+  const line=(data,color)=>{ctx.beginPath(); data.forEach((v,i)=>{const x=(i/(data.length-1||1))*(c.width-20)+10; const y=c.height-((v-min)/range)*(c.height-30)-12; i?ctx.lineTo(x,y):ctx.moveTo(x,y);}); ctx.lineWidth=3; ctx.strokeStyle=color; ctx.stroke();};
+  line(d1,'#58b6ff'); line(d2,'#79ffd4');
+}
+document.querySelectorAll('.nav-btn').forEach(btn=>btn.addEventListener('click',()=>switchScreen(btn.dataset.screen)));
+document.getElementById('setupModal').addEventListener('click',(e)=>{if(e.target.id==='setupModal') closeSetup();});
+(function init(){
+  const raw=localStorage.getItem(SAVE_KEY);
+  if(raw){try{Object.assign(game, JSON.parse(raw));}catch(e){}}
+  else {log('Старт игры. Рабочая версия на неоновом шаблоне готова.');}
+  refreshAuctions();
+  refreshClientOrders(true);
+  renderAll();
+})();
+</script>
+</body>
+</html>
