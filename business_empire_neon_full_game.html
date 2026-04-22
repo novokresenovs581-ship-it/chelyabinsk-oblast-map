@@ -1,0 +1,497 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Business Empire Neon Full</title>
+<style>
+:root{
+  --bg:#050b16;
+  --panel:#0d1524;
+  --panel2:#121d31;
+  --line:rgba(255,255,255,.10);
+  --text:#edf4ff;
+  --muted:#9fb0c8;
+  --blue1:#1f6fff;
+  --blue2:#52b8ff;
+  --green:#5af07e;
+  --gold:#ffbe4b;
+  --purple:#9b6bff;
+  --red:#ff5c72;
+  --shadow:0 18px 40px rgba(0,0,0,.35);
+  --r:24px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{
+  margin:0;
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Arial,sans-serif;
+  background:
+    radial-gradient(circle at top center, rgba(32,110,255,.16), transparent 24%),
+    radial-gradient(circle at bottom right, rgba(82,184,255,.10), transparent 22%),
+    linear-gradient(180deg,#030914,#08101d 30%, #0b1424 100%);
+}
+.wrap{max-width:1080px;margin:0 auto;padding:12px 12px 170px}
+.card{
+  background:linear-gradient(180deg, rgba(18,29,49,.94), rgba(11,19,34,.94));
+  border:1px solid var(--line);
+  border-radius:28px;
+  box-shadow:var(--shadow);
+}
+.topbar{
+  display:grid;
+  grid-template-columns:84px 1.2fr 1fr auto auto;
+  gap:14px;
+  align-items:center;
+  padding:16px;
+  margin-bottom:14px;
+}
+.avatar{
+  width:72px;height:72px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, #4f8cff, #1a2e51 70%);
+  border:2px solid rgba(255,255,255,.18);
+  display:flex;align-items:center;justify-content:center;
+  font-size:30px;font-weight:800;
+}
+.levelbox,.cashbox,.gembox,.notif{
+  min-height:72px;
+  border-radius:22px;
+  background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+  border:1px solid rgba(255,255,255,.08);
+  display:flex;align-items:center;justify-content:center;
+  padding:10px 14px;
+}
+.levelbox{display:block}
+.level-title{font-size:17px;font-weight:800}
+.progress{
+  height:18px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.08);margin-top:12px;
+  border:1px solid rgba(255,255,255,.08)
+}
+.progress > span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue1),var(--blue2))}
+.cash-main{font-size:24px;font-weight:900;color:var(--green)}
+.cash-sub{font-size:13px;color:var(--green);margin-top:5px;text-align:center}
+.gembox,.notif{font-size:18px;font-weight:800}
+.icon-pill{
+  width:46px;height:46px;border-radius:16px;display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);margin-right:10px
+}
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin-bottom:14px;
+}
+.stat{padding:18px 16px;min-height:110px}
+.stat .title{font-size:14px;color:var(--muted)}
+.stat .value{font-size:20px;font-weight:900;margin-top:8px}
+.event-bar{
+  padding:16px 18px;
+  margin-bottom:14px;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+.section{padding:16px;margin-bottom:14px}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.section-head h2{margin:0;font-size:20px}
+.pill-btn{
+  border:none;border-radius:14px;padding:10px 14px;
+  color:#d8e7ff;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)
+}
+.pill-btn:disabled{opacity:.45}
+.screen{display:none}
+.screen.active{display:block}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+}
+.product,.task,.finance,.order,.log,.district,.upgrade{
+  padding:14px;
+  border-radius:22px;
+  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.08);
+}
+.thumb{
+  height:150px;border-radius:18px;margin-bottom:12px;
+  background:linear-gradient(135deg,#1f304c,#0d1728);
+  border:1px solid rgba(255,255,255,.08);
+  display:flex;align-items:center;justify-content:center;
+  font-size:64px;
+}
+.product .name,.upgrade .name,.district .name{font-size:17px;font-weight:800}
+.product .meta,.small-muted,.desc{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.4}
+.mini-progress{height:10px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin:12px 0}
+.mini-progress span{display:block;height:100%;background:linear-gradient(90deg,var(--purple),#6d54ff)}
+.action-btn{
+  width:100%;border:none;border-radius:14px;padding:12px 12px;font-size:14px;font-weight:800;color:white;
+  background:linear-gradient(90deg,#2b2f3b,#3c2d1c);
+  border:1px solid rgba(255,255,255,.08)
+}
+.action-btn:disabled{opacity:.45}
+.bottom-grid{
+  display:grid;
+  grid-template-columns:1.1fr 1.2fr 1fr;
+  gap:14px;
+  margin-bottom:16px;
+}
+.stack{display:flex;flex-direction:column;gap:12px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.badge{padding:6px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.05);font-size:11px;font-weight:800}
+.scroll-x{display:flex;gap:12px;overflow:auto;padding-bottom:4px}
+.market-card,.order-card,.review-card,.stock-card,.comp-card,.vip-card{min-width:250px;background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:14px}
+.spark{width:100%;height:48px;border-radius:10px;background:rgba(255,255,255,.04);margin-top:10px}
+canvas#chart{width:100%;height:180px;background:rgba(255,255,255,.03);border-radius:18px;border:1px solid rgba(255,255,255,.08)}
+.tabs{
+  position:fixed;left:0;right:0;bottom:0;padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg, rgba(6,10,18,.04), rgba(6,10,18,.72) 18%, rgba(6,10,18,.90));
+  backdrop-filter:blur(14px);z-index:50;
+}
+.nav-card{
+  max-width:1080px;margin:0 auto;
+  border-radius:28px;
+  padding:16px;
+  background:linear-gradient(180deg, rgba(21,31,51,.96), rgba(13,21,36,.96));
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 16px 40px rgba(0,0,0,.38);
+}
+.nav-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.nav-btn{
+  min-height:88px;border-radius:26px;border:1px solid rgba(255,255,255,.10);
+  background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+  color:var(--text);font-size:18px;font-weight:900;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+}
+.nav-btn.active{
+  background:linear-gradient(90deg,var(--blue1),var(--blue2));
+  box-shadow:0 10px 28px rgba(31,111,255,.28);
+}
+.toast{
+  position:fixed;left:50%;bottom:120px;transform:translateX(-50%) translateY(12px);
+  opacity:0;pointer-events:none;z-index:80;background:rgba(8,14,24,.96);
+  border:1px solid rgba(255,255,255,.10);border-radius:10px;padding:8px 10px;
+  max-width:min(72vw,320px);text-align:center;box-shadow:0 10px 24px rgba(0,0,0,.28);
+  transition:.22s ease;font-size:12px;line-height:1.25
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.modal{
+  position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;align-items:flex-end;z-index:90
+}
+.modal.show{display:flex}
+.sheet{
+  width:100%;max-width:100%;margin:0 auto;background:linear-gradient(180deg,#11233d,#0b1729);
+  border-top:1px solid rgba(255,255,255,.12);border-radius:20px 20px 0 0;padding:14px 12px 16px;
+  max-height:60vh;overflow:auto
+}
+.sheet-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.headline{font-size:18px;font-weight:900;margin-bottom:6px}
+input,select{
+  width:100%;padding:10px 11px;border-radius:12px;border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.06);color:#fff;outline:none;font-size:13px
+}
+@media (max-width:980px){
+  .topbar{grid-template-columns:72px 1fr;gap:12px}
+  .stats-grid,.product-grid,.bottom-grid,.grid-2{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  .wrap{padding:10px 10px 205px}
+  .stats-grid,.product-grid,.bottom-grid,.grid-2,.sheet-grid{grid-template-columns:1fr}
+  .nav-grid{grid-template-columns:repeat(3,1fr)}
+  .nav-btn{min-height:84px;font-size:17px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card topbar">
+    <div class="avatar" id="avatarBox">🦈</div>
+    <div class="levelbox">
+      <div class="level-title" id="levelTitle">Уровень 1</div>
+      <div class="progress"><span id="xpBar"></span></div>
+      <div class="small-muted" id="xpText">0 / 140</div>
+    </div>
+    <div class="cashbox">
+      <div>
+        <div class="cash-main" id="moneyMain">₽ 20 000</div>
+        <div class="cash-sub" id="cashSub">+₽ 0 / день</div>
+      </div>
+    </div>
+    <div class="gembox"><span class="icon-pill">⭐</span><span id="repBox">0</span></div>
+    <button class="notif action-btn" style="width:72px;padding:0" onclick="openSetup()">⚙️</button>
+  </div>
+
+  <div class="stats-grid">
+    <div class="card stat"><div class="title">День</div><div class="value" id="dayBox">1</div><div class="small-muted" id="seasonBox">Базовый спрос</div></div>
+    <div class="card stat"><div class="title">Рейтинг</div><div class="value" style="color:var(--gold)" id="ratingBox">3.0 ★</div><div class="small-muted" id="brandBox">Нет бренда</div></div>
+    <div class="card stat"><div class="title">Долг</div><div class="value" style="color:var(--red)" id="debtBox">₽ 0</div><div class="small-muted" id="debtDaysBox">Нет кредита</div></div>
+    <div class="card stat"><div class="title">Район</div><div class="value" id="districtBox">Нет</div><div class="small-muted" id="eventShortBox">Без события</div></div>
+  </div>
+
+  <div class="card event-bar">
+    <div><strong id="eventTitle">📊 Рынок спокоен</strong><div class="small-muted" id="eventDesc">Пока без горячих событий. Лови обычный спрос.</div></div>
+    <div class="small-muted" id="eventTimer">—</div>
+  </div>
+
+  <div id="screen-home" class="screen active">
+    <div class="card section">
+      <div class="section-head">
+        <h2>Товары для закупки</h2>
+        <button class="pill-btn" onclick="dailyChance()">Возможность дня</button>
+      </div>
+      <div class="product-grid" id="productsGrid"></div>
+    </div>
+
+    <div class="bottom-grid">
+      <div class="card section">
+        <div class="section-head"><h2>Заказы клиентов</h2><span class="badge" id="ordersCount">0</span></div>
+        <div class="stack" id="homeOrders"></div>
+      </div>
+
+      <div class="card section">
+        <div class="section-head"><h2>Ежедневные задачи</h2><button class="pill-btn" onclick="nextDay()">Следующий день</button></div>
+        <div class="stack" id="taskStack"></div>
+      </div>
+
+      <div class="card section">
+        <div class="section-head"><h2>Финансы</h2></div>
+        <div class="stack" id="financeSummary"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="screen-sales" class="screen">
+    <div class="card section">
+      <div class="section-head"><h2>Инвентарь</h2><span class="badge" id="inventoryCount">0</span></div>
+      <div class="product-grid" id="inventoryGrid"></div>
+    </div>
+    <div class="card section">
+      <div class="section-head"><h2>Активные объявления</h2><span class="badge" id="listingsCount">0</span></div>
+      <div class="product-grid" id="listingGrid"></div>
+    </div>
+  </div>
+
+  <div id="screen-market" class="screen">
+    <div class="card section">
+      <div class="section-head"><h2>Рынок акций</h2><button class="pill-btn" onclick="refreshMarketEvents(true)">Освежить рынок</button></div>
+      <canvas id="chart" width="760" height="180"></canvas>
+      <div style="height:10px"></div>
+      <div class="scroll-x" id="stocksList"></div>
+    </div>
+    <div class="grid-2">
+      <div class="card section">
+        <div class="section-head"><h2>Чёрный рынок</h2><span class="badge" id="blackCooldown">Доступен</span></div>
+        <div class="scroll-x" id="blackList"></div>
+      </div>
+      <div class="card section">
+        <div class="section-head"><h2>Аукционы</h2><span class="badge">Лоты</span></div>
+        <div class="scroll-x" id="auctionList"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="screen-city" class="screen">
+    <div class="card section">
+      <div class="section-head"><h2>Районы города</h2><span class="badge">Влияние на спрос</span></div>
+      <div class="grid-2" id="districtGrid"></div>
+    </div>
+    <div class="card section">
+      <div class="section-head"><h2>Доставка</h2><button class="pill-btn" onclick="collectPassive()">Собрать доход</button></div>
+      <div class="stack" id="deliveryInfo"></div>
+    </div>
+  </div>
+
+  <div id="screen-business" class="screen">
+    <div class="grid-2">
+      <div class="card section">
+        <div class="section-head"><h2>Улучшения бизнеса</h2><span class="badge">Рост</span></div>
+        <div class="stack" id="businessUpgrades"></div>
+      </div>
+      <div class="card section">
+        <div class="section-head"><h2>Команда</h2><span class="badge">Персонал</span></div>
+        <div class="stack" id="teamGrid"></div>
+      </div>
+    </div>
+    <div class="card section">
+      <div class="section-head"><h2>Операции</h2><span class="badge">Реклама и переговоры</span></div>
+      <div class="grid-2" id="opsGrid"></div>
+    </div>
+  </div>
+
+  <div id="screen-social" class="screen">
+    <div class="grid-2">
+      <div class="card section">
+        <div class="section-head"><h2>Отзывы</h2><span class="badge">Клиенты</span></div>
+        <div class="scroll-x" id="reviewsList"></div>
+      </div>
+      <div class="card section">
+        <div class="section-head"><h2>Конкуренты</h2><span class="badge">Давление</span></div>
+        <div class="scroll-x" id="compList"></div>
+      </div>
+    </div>
+    <div class="card section">
+      <div class="section-head"><h2>VIP-клиент</h2><span class="badge" id="vipStatus">Доступен</span></div>
+      <div class="scroll-x" id="vipList"></div>
+    </div>
+    <div class="card section">
+      <div class="section-head"><h2>Миссии</h2><span class="badge">Прогресс</span></div>
+      <div class="stack" id="missionList"></div>
+    </div>
+  </div>
+
+  <div id="screen-finance" class="screen">
+    <div class="grid-2">
+      <div class="card section">
+        <div class="section-head"><h2>Портфель</h2><span class="badge">Акции</span></div>
+        <div class="stack" id="portfolioList"></div>
+      </div>
+      <div class="card section">
+        <div class="section-head"><h2>Финансы</h2><span class="badge">Кредит</span></div>
+        <div class="stack" id="financeList"></div>
+      </div>
+    </div>
+    <div class="card section">
+      <div class="section-head"><h2>Лента событий</h2><span class="badge">История</span></div>
+      <div class="stack" id="newsList"></div>
+    </div>
+    <div class="card section">
+      <div class="section-head"><h2>Управление сейвом</h2><span class="badge">Локально</span></div>
+      <div class="grid-2">
+        <button class="action-btn" onclick="saveGame()">Сохранить</button>
+        <button class="action-btn" onclick="loadGame()">Загрузить</button>
+        <button class="action-btn" onclick="exportSave()">Экспорт</button>
+        <button class="action-btn" style="background:linear-gradient(90deg,#792a33,#4e111c)" onclick="resetGame()">Сбросить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="nav-card">
+    <div class="nav-grid">
+      <button class="nav-btn active" data-screen="home">🏠 Главная</button>
+      <button class="nav-btn" data-screen="sales">🛒 Продажи</button>
+      <button class="nav-btn" data-screen="market">🧺 Рынок+</button>
+      <button class="nav-btn" data-screen="city">🏙️ Город</button>
+      <button class="nav-btn" data-screen="business">💼 Бизнес</button>
+      <button class="nav-btn" data-screen="social">👥 Соц.</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="modal" id="setupModal">
+  <div class="sheet">
+    <div class="headline">Настрой стиль империи</div>
+    <div class="small-muted" style="margin-bottom:10px">Компактная панель снизу, как ты и хотел.</div>
+    <div class="sheet-grid">
+      <input id="brandInput" placeholder="Название бренда">
+      <select id="avatarSelect">
+        <option value="🦈">🦈 Акула</option>
+        <option value="🚀">🚀 Стартапер</option>
+        <option value="💼">💼 Бизнес</option>
+        <option value="😎">😎 Игрок</option>
+        <option value="👨‍💼">👨‍💼 Классика</option>
+      </select>
+    </div>
+    <div style="height:10px"></div>
+    <div class="sheet-grid">
+      <button class="action-btn" style="background:linear-gradient(90deg,var(--blue1),var(--blue2))" onclick="applySetup()">Применить</button>
+      <button class="action-btn" onclick="closeSetup()">Закрыть</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* game logic omitted for brevity in this comment? no, actual script below */
+
+const SAVE_KEY='business_empire_neon_full_v1';
+function fmt(n){return '₽ '+Math.round(n).toLocaleString('ru-RU')}
+function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
+function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>el.classList.remove('show'),1800)}
+function log(t){game.news.unshift(`День ${game.day}: ${t}`);if(game.news.length>120)game.news.length=120}
+function categoryLabel(c){return({tech:'техника',fashion:'одежда',gaming:'игры',furniture:'мебель',audio:'аудио',luxury:'премиум'})[c]||c}
+function season(){return SEASONS[game.seasonIndex%SEASONS.length]}
+function categoryMult(cat){let m=(season().mult[cat]||1)*(game.demandShock[cat]||1);game.marketEvents.forEach(e=>{if(e.cat===cat)m*=e.mult});return m}
+function currentDemand(){let d=1;if(game.districtOwned){const dist=DISTRICTS.find(x=>x.id===game.districtOwned);d*=dist.demand}if(game.adBoostDays>0)d*=game.adBoost;d*=0.84+(game.rating/5)*0.26;return d}
+function currentBuyMod(){return game.dealBoostDays>0?game.dealBoost:1}
+function sellBonus(){let b=0;BUSINESS.forEach(u=>{if(game.businessOwned[u.id])b+=(u.sell||0)});Object.values(game.teamOwned).forEach(t=>{b+=(t.sell||0)});return b}
+function gainXP(v){game.xp+=v;while(game.xp>=game.level*140){game.xp-=game.level*140;game.level+=1;game.rep+=1;game.rating=clamp(game.rating+0.1,1,5);log(`Новый уровень ${game.level}. Репутация +1⭐`);toast(`Уровень ${game.level}`)}}
+function openSetup(){document.getElementById('brandInput').value=game.brand||'';document.getElementById('avatarSelect').value=game.avatar||'🦈';document.getElementById('setupModal').classList.add('show')}
+function closeSetup(){document.getElementById('setupModal').classList.remove('show')}
+function applySetup(){const b=document.getElementById('brandInput').value.trim();const a=document.getElementById('avatarSelect').value;if(b)game.brand=b;game.avatar=a;closeSetup();log(`Настроен стиль империи: ${game.avatar} ${game.brand||'без бренда'}`);renderAll();saveGame();toast('Обновлено')}
+function switchScreen(screen){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-'+screen).classList.add('active');document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));document.querySelector(`.nav-btn[data-screen="${screen}"]`).classList.add('active')}
+function buyProduct(id){const p=PRODUCTS.find(x=>x.id===id);const buy=p.buy*currentBuyMod();if(game.money<buy){toast('Не хватает денег');return}game.money-=buy;game.inventory.push({uid:Date.now()+Math.random(),id:p.id,icon:p.icon,name:p.name,buy:buy,baseSell:p.sell,minDays:p.minDays,demand:p.demand,cat:p.cat,listedDays:0});log(`Куплен товар: ${p.name} за ${fmt(buy)}`);gainXP(18);renderAll();saveGame()}
+function listItem(uid,premium=false){const idx=game.inventory.findIndex(x=>x.uid===uid);if(idx<0)return;const item=game.inventory[idx];const fee=premium?Math.max(500,item.buy*0.05):Math.max(180,item.buy*0.02);if(game.money<fee){toast('Не хватает денег на размещение');return}game.money-=fee;item.listedDays=0;item.promoted=premium;item.listFee=fee;item.askPrice=item.baseSell*(premium?1.05:1);game.listings.push(item);game.inventory.splice(idx,1);log(`Товар ${item.name} выставлен${premium?' с продвижением':''}.`);renderAll();saveGame()}
+function cancelListing(uid){const idx=game.listings.findIndex(x=>x.uid===uid);if(idx<0)return;const item=game.listings[idx];game.inventory.push({...item,listedDays:0,promoted:false});game.listings.splice(idx,1);log(`Объявление снято: ${item.name}`);renderAll();saveGame()}
+function boostListing(uid){const item=game.listings.find(x=>x.uid===uid);if(!item)return;const fee=Math.max(400,item.buy*0.04);if(game.money<fee){toast('Не хватает денег');return}game.money-=fee;item.promoted=true;item.listFee=(item.listFee||0)+fee;item.askPrice*=1.03;log(`Продвинуто объявление: ${item.name}`);renderAll();saveGame()}
+function addReview(good){const goodTexts=['Всё быстро и по делу.','Цена реально порадовала.','Заказ пришёл без проблем.','Ещё вернусь за покупкой.'];const badTexts=['Дорого для такого товара.','Могло быть быстрее.','Не впечатлило.','Ожидал большего.'];const names=['Дима','Саня','Кирилл','Никита','Ваня','Егор','Макс'];const stars=good?(Math.random()>0.3?5:4):(Math.random()>0.5?3:2);game.reviews.unshift({name:names[Math.floor(Math.random()*names.length)],stars,text:(good?goodTexts:badTexts)[Math.floor(Math.random()*(good?goodTexts.length:badTexts.length))]});if(game.reviews.length>10)game.reviews.length=10;game.rating=clamp((game.rating*5+stars)/6,1,5)}
+function processListingsPerDay(){const sold=[];game.listings.forEach(item=>{item.listedDays+=1;if(item.listedDays<item.minDays)return;let chance=item.demand*currentDemand()*categoryMult(item.cat);chance+=sellBonus();if(item.promoted)chance+=0.12;if(game.brand)chance+=0.03;const avgComp=game.competitors.reduce((s,c)=>s+c.power,0)/game.competitors.length;chance-=avgComp>68?0.08:(avgComp>58?0.04:0);chance=clamp(chance,0.07,0.92);if(Math.random()<chance){let priceMod=(0.90+Math.random()*0.24)*categoryMult(item.cat);if(item.promoted)priceMod+=0.05;if(game.brand)priceMod+=0.03;const sale=Math.max(item.buy*0.55,item.askPrice*priceMod);const profit=sale-item.buy-(item.listFee||0);game.money+=sale;if(profit>0)game.totalEarned+=profit;game.productDeals+=1;game.rep+=profit>0?0.25:0.05;addReview(profit>=0);gainXP(30+(profit>0?12:0));log(`Продан ${item.name}: ${profit>=0?'+':''}${fmt(profit)}`);sold.push(item.uid)}else if(item.listedDays>=item.minDays+5&&Math.random()<0.45){item.askPrice*=0.96;log(`Объявление залежалось: ${item.name}, цена снижена.`)}});if(sold.length)game.listings=game.listings.filter(x=>!sold.includes(x.uid))}
+function refreshClientOrders(force=false){if(!force&&game.clientOrders.length)return;const picks=[...PRODUCTS].sort(()=>Math.random()-0.5).slice(0,3);game.clientOrders=picks.map((p,i)=>({id:'ord_'+p.id+'_'+i+'_'+Math.random(),productId:p.id,icon:p.icon,name:p.name,cat:p.cat,reward:p.sell*(1.10+Math.random()*0.25),penalty:p.buy*(0.08+Math.random()*0.10),days:2+Math.floor(Math.random()*3)}))}
+function fulfillOrder(id){const idx=game.clientOrders.findIndex(o=>o.id===id);if(idx<0)return;const order=game.clientOrders[idx];const itemIdx=game.inventory.findIndex(i=>i.id===order.productId);if(itemIdx<0){toast('Нужен такой товар в инвентаре');return}const item=game.inventory[itemIdx];const profit=order.reward-item.buy;game.money+=order.reward;if(profit>0)game.totalEarned+=profit;game.inventory.splice(itemIdx,1);game.clientOrders.splice(idx,1);game.rep+=0.3;gainXP(34);addReview(true);log(`Выполнен заказ клиента: ${order.name}, результат ${profit>=0?'+':''}${fmt(profit)}`);renderAll();saveGame()}
+function tickClientOrders(){game.clientOrders.forEach(o=>o.days-=1);const expired=game.clientOrders.filter(o=>o.days<=0);expired.forEach(o=>{game.money-=o.penalty;game.rating=clamp(game.rating-0.05,1,5);log(`Сорван заказ клиента: ${o.name}, штраф ${fmt(o.penalty)}`)});game.clientOrders=game.clientOrders.filter(o=>o.days>0);if(game.day%4===0||game.clientOrders.length===0)refreshClientOrders(true)}
+function refreshMarketEvents(force=false){if(!force&&game.marketEvents.length)return;const t=MARKET_EVENTS[Math.floor(Math.random()*MARKET_EVENTS.length)];game.marketEvents=[{...t}];log(`Срочное событие рынка: ${t.text}`)}
+function useEventTrade(){const e=game.marketEvents[0];if(!e){toast('События нет');return}const cands=PRODUCTS.filter(p=>p.cat===e.cat);const pick=cands[Math.floor(Math.random()*cands.length)];const buy=pick.buy*0.92;if(game.money<buy){toast('Не хватает денег');return}game.money-=buy;game.inventory.push({uid:Date.now()+Math.random(),id:pick.id,icon:pick.icon,name:pick.name,buy:buy,baseSell:pick.sell,minDays:Math.max(1,pick.minDays-1),demand:pick.demand+0.08,cat:pick.cat,listedDays:0});log(`Быстрый вход в горячую тему: ${pick.name} за ${fmt(buy)}`);gainXP(20);renderAll();saveGame()}
+function refreshAuctions(force=false){if(!force&&game.auctions.length)return;const picks=[...PRODUCTS].sort(()=>Math.random()-0.5).slice(0,4);game.auctions=picks.map((p,i)=>({id:'auc_'+p.id+'_'+i+'_'+Math.random(),productId:p.id,icon:p.icon,name:p.name,cat:p.cat,start:p.buy*(0.54+Math.random()*0.2),market:p.buy,sell:p.sell,minDays:p.minDays,demand:p.demand}))}
+function bidAuction(id){const lot=game.auctions.find(x=>x.id===id);if(!lot)return;if(game.money<lot.start){toast('Не хватает денег');return}game.money-=lot.start;const chance=0.58+(game.brand?0.06:0)+(game.teamOwned.manager?0.05:0);if(Math.random()<chance){game.inventory.push({uid:Date.now()+Math.random(),id:lot.productId,icon:lot.icon,name:lot.name,buy:lot.start,baseSell:lot.sell,minDays:lot.minDays,demand:lot.demand,cat:lot.cat,listedDays:0});log(`Выигран аукцион: ${lot.name} за ${fmt(lot.start)}`);gainXP(24)}else{const fee=lot.start*0.08;game.money-=fee;log(`Аукцион проигран: ${lot.name}, комиссия ${fmt(fee)}`)}game.auctions=game.auctions.filter(x=>x.id!==id);renderAll();saveGame()}
+function runBlackMarket(id){const d=game.blackMarket.find(x=>x.id===id);if(!d)return;if(game.blackMarketCooldown>0){toast('Чёрный рынок закрыт');return}if(game.money<d.base){toast('Не хватает денег');return}game.money-=d.base;game.blackMarketCooldown=3;if(Math.random()>d.risk){const win=d.base*d.reward;game.money+=win;game.totalEarned+=Math.max(0,win-d.base);game.rep+=0.2;gainXP(38);log(`Чёрный рынок: удачная сделка ${d.name}, результат ${fmt(win-d.base)}`)}else{const penalty=Math.random()>0.55?d.base*0.35:0;if(penalty){game.money-=penalty;log(`Чёрный рынок: провал по ${d.name}, убыток ${fmt(d.base+penalty)}`)}else log(`Чёрный рынок: сделка по ${d.name} сорвалась, деньги сгорели.`);game.rating=clamp(game.rating-0.10,1,5)}renderAll();saveGame()}
+function buyStock(name){const s=game.stocks[name];if(game.money<s.price){toast('Не хватает денег');return}game.money-=s.price;s.qty+=1;game.stockDeals+=1;gainXP(18);log(`Куплена акция ${name} за ${fmt(s.price)}`);checkMissions();renderAll();saveGame()}
+function sellStock(name){const s=game.stocks[name];if(s.qty<=0){toast('Нет акции');return}s.qty-=1;game.money+=s.price;game.stockDeals+=1;gainXP(15);log(`Продана акция ${name} за ${fmt(s.price)}`);checkMissions();renderAll();saveGame()}
+function chooseDistrict(id){const d=DISTRICTS.find(x=>x.id===id);if(game.districtOwned===id){toast('Этот район уже твой');return}if(game.money<d.rent){toast('Не хватает денег');return}game.money-=d.rent;game.districtOwned=id;game.rep+=1;gainXP(38);log(`Ты занял район: ${d.name}`);checkMissions();renderAll();saveGame()}
+function sendDelivery(id){if(game.inventory.length===0){toast('Нужен товар в инвентаре');return}const d=DISTRICTS.find(x=>x.id===id);const shipping=700+Math.random()*900;const item=game.inventory.shift();let success=0.70+(game.teamOwned.operator?0.12:0)+(game.adBoostDays>0?0.05:0);success*=categoryMult(item.cat);if(Math.random()<success){const earn=item.baseSell*d.demand*categoryMult(item.cat)*(0.86+Math.random()*0.34);const profit=earn-item.buy-shipping;game.money+=earn-shipping;if(profit>0)game.totalEarned+=profit;game.deliveriesDone+=1;addReview(profit>=0);game.rep+=0.15;gainXP(28);log(`Доставка в район ${d.name}: ${profit>=0?'+':''}${fmt(profit)}`)}else{game.money-=shipping;addReview(false);log(`Доставка в район ${d.name} сорвалась: -${fmt(shipping)}`)}checkMissions();renderAll();saveGame()}
+function buyBusiness(id){const b=BUSINESS.find(x=>x.id===id);if(!b||game.businessOwned[id])return;if(b.req&&!game.businessOwned[b.req]){toast('Сначала прошлый этап');return}if(game.money<b.cost){toast('Не хватает денег');return}game.money-=b.cost;game.passiveIncome+=b.income;game.dailyExpenses+=b.expense;game.rep+=b.rep;game.businessOwned[id]=true;if(b.brand&&!game.brand)game.brand='ULTRA';log(`Куплено улучшение: ${b.name}`);gainXP(95);renderAll();saveGame()}
+function hire(id){const t=TEAM.find(x=>x.id===id);if(!t||game.teamOwned[id])return;if(game.money<t.cost){toast('Не хватает денег');return}game.money-=t.cost;game.teamOwned[id]=t;game.dailyExpenses+=t.salary;game.rep+=1;log(`Нанят сотрудник: ${t.name}`);gainXP(50);checkMissions();renderAll();saveGame()}
+function useOp(id){const op=OPS.find(x=>x.id===id);if(game.money<op.cost){toast('Не хватает денег');return}game.money-=op.cost;if(id.startsWith('ad_')){game.adBoostDays=op.days;game.adBoost=op.mult;log(`Запущена операция: ${op.name}`)}else{game.dealBoostDays=op.days;game.dealBoost=op.mult;log('Проведены переговоры: закупки временно дешевле')}game.rep+=0.3;gainXP(22);renderAll();saveGame()}
+function takeLoan(){if(game.debt>0){toast('Сначала закрой долг');return}const amount=180000;game.money+=amount;game.debt=amount*1.17;game.debtDays=16;log(`Взят кредит: +${fmt(amount)}. Вернуть нужно ${fmt(game.debt)} за 16 дней.`);renderAll();saveGame()}
+function payDebt(){if(game.debt<=0){toast('Долга нет');return}const pay=Math.min(game.money,35000,game.debt);if(pay<=0){toast('Нет денег');return}game.money-=pay;game.debt-=pay;log(`Погашен долг: -${fmt(pay)}`);checkMissions();renderAll();saveGame()}
+function tryVipDeal(){if(game.vipCooldown>0){toast('VIP позже');return}const available=game.listings.length+game.inventory.length;if(available===0){toast('Нужен хотя бы один товар');return}const price=15000+Math.random()*35000;let chance=0.30+(game.rating/10)+(game.brand?0.08:0)+sellBonus()/3;chance=clamp(chance,0.18,0.84);game.vipCooldown=4;if(Math.random()<chance){game.money+=price;game.totalEarned+=price;game.rep+=1.2;gainXP(80);addReview(true);log(`VIP-клиент: +${fmt(price)}`)}else{addReview(false);game.rating=clamp(game.rating-0.08,1,5);log('VIP-клиент отказался.')}renderAll();saveGame()}
+function dailyChance(){const arr=[{text:'Нашёл партию со скидкой',fn:()=>{game.dealBoostDays=2;game.dealBoost=0.88}},{text:'Вирусный ролик поднял спрос',fn:()=>{game.adBoostDays=2;game.adBoost=Math.max(game.adBoost,1.12)}},{text:'Богатый клиент оставил предзаказ: +9 000 ₽',fn:()=>{game.money+=9000;game.totalEarned+=9000}},{text:'Резкий негативный отзыв',fn:()=>{game.rating=clamp(game.rating-0.25,1,5);addReview(false)}},{text:'Удачные переговоры с поставщиком',fn:()=>{game.dealBoostDays=3;game.dealBoost=0.90}},{text:'Появилось срочное рыночное событие',fn:()=>{refreshMarketEvents(true)}}];const e=arr[Math.floor(Math.random()*arr.length)];e.fn();log(`Возможность дня: ${e.text}`);renderAll();saveGame();toast(e.text)}
+function marketTurn(){Object.values(game.stocks).forEach(s=>{let vol=s.vol+game.marketRiskBoost;if(game.teamOwned.analyst)vol*=0.78;const drift=1+s.trend+(Math.random()*2-1)*vol;s.price=Math.max(12,s.price*drift);s.history.push(Math.round(s.price));if(s.history.length>20)s.history.shift()})}
+function competitorTurn(){game.competitors.forEach(c=>{c.power=clamp(c.power+(Math.random()*8-4),20,95);const moods=['Атакует скидками','Скупает рекламу','Следит за спросом','Пытается обойти тебя','Готовит акции'];c.mood=moods[Math.floor(Math.random()*moods.length)]});if(game.competitors.some(c=>c.power>75)){game.rating=clamp(game.rating-0.05,1,5);log('Конкуренты усилились и давят на рынок.')}} 
+function rotateSeason(){if(game.day%6===0){game.seasonIndex=(game.seasonIndex+1)%SEASONS.length;log(`Сезон сменился: ${season().name}`)}}
+function refreshDemandShock(){const cats=['tech','fashion','gaming','furniture','audio','luxury'];const target=cats[Math.floor(Math.random()*cats.length)];cats.forEach(c=>game.demandShock[c]=1);if(Math.random()<0.55){game.demandShock[target]=0.82+Math.random()*0.08;log(`Перепроизводство в категории: ${categoryLabel(target)}.`)}else{game.demandShock[target]=1.10+Math.random()*0.10;log(`Дефицит в категории: ${categoryLabel(target)}.`)}}
+function tickMarketEvents(){game.marketEvents.forEach(e=>e.duration-=1);game.marketEvents=game.marketEvents.filter(e=>e.duration>0);if(game.day%5===0&&Math.random()<0.55)refreshMarketEvents(true)}
+function randomInspection(){let chance=0.10;if(game.blackMarketCooldown>0)chance+=0.05;if(game.teamOwned.lawyer)chance-=0.04;if(Math.random()<chance){const fine=3000+Math.random()*8000;game.money-=fine;game.rating=clamp(game.rating-0.08,1,5);log(`Проверка и штраф: -${fmt(fine)}`)}}
+function randomEvent(){const events=[{chance:0.10,fn:()=>{game.stocks.CryptoX.price*=0.82;log('Крипта обвалилась')}},{chance:0.10,fn:()=>{game.stocks.TechCore.price*=1.10;log('Хайп на технику')}},{chance:0.09,fn:()=>{game.rating=clamp(game.rating-0.1,1,5);log('Конкурент устроил демпинг')}},{chance:0.08,fn:()=>{game.money+=12000;game.totalEarned+=12000;addReview(true);log('Лояльные клиенты принесли заказов')}},{chance:0.07,fn:()=>{game.money-=3500;addReview(false);log('Сбой доставки')}},{chance:0.06,fn:()=>{game.marketRiskBoost+=0.05;log('Рынок стал рискованнее')}},{chance:0.08,fn:()=>{game.dealBoost=1;game.dealBoostDays=0;log('Поставщик поднял цены')}},{chance:0.06,fn:()=>{refreshAuctions(true);log('Появился аукцион с жирными лотами')}}];const roll=Math.random();let sum=0;for(const e of events){sum+=e.chance;if(roll<sum){e.fn();break}}}
+function applyDailyFinance(){let income=game.passiveIncome;if(game.districtOwned)income*=DISTRICTS.find(x=>x.id===game.districtOwned).demand;if(game.teamOwned.operator)income*=1.12;if(game.adBoostDays>0)income*=game.adBoost;income*=0.86+(game.rating/5)*0.24;if(income>0){game.money+=income;game.totalEarned+=income;log(`Пассивный доход: +${fmt(income)}`)}let expenses=game.dailyExpenses;if(game.districtOwned)expenses+=DISTRICTS.find(x=>x.id===game.districtOwned).rent*0.35;if(expenses>0){game.money-=expenses;log(`Ежедневные расходы: -${fmt(expenses)}`)}if(game.money>120000){let tax=game.money*0.012;if(game.teamOwned.lawyer)tax*=0.88;game.money-=tax;log(`Налоги и издержки: -${fmt(tax)}`)}if(game.debt>0){const pay=Math.min(game.debt,Math.max(7000,game.debt/Math.max(1,game.debtDays)));if(game.money>=pay){game.money-=pay;game.debt-=pay;log(`Платёж по кредиту: -${fmt(pay)}`)}else{game.debt*=1.04;game.rating=clamp(game.rating-0.12,1,5);log('Просрочка по кредиту.')}game.debtDays=Math.max(0,game.debtDays-1)}if(game.adBoostDays>0)game.adBoostDays-=1;if(game.dealBoostDays>0)game.dealBoostDays-=1;if(game.vipCooldown>0)game.vipCooldown-=1;if(game.blackMarketCooldown>0)game.blackMarketCooldown-=1;if(game.adBoostDays<=0)game.adBoost=1;if(game.dealBoostDays<=0)game.dealBoost=1;game.marketRiskBoost=Math.max(0,game.marketRiskBoost-0.02)}
+function collectPassive(){let amount=game.passiveIncome*0.45;if(amount<=0){toast('Пока нет пассивного дохода');return}if(game.teamOwned.operator)amount*=1.1;if(game.adBoostDays>0)amount*=game.adBoost;game.money+=amount;game.totalEarned+=amount;log(`Собран дополнительный доход: +${fmt(amount)}`);gainXP(12);renderAll();saveGame()}
+function nextDay(){game.day+=1;rotateSeason();if(game.day%4===0)refreshDemandShock();if(game.day%5===0)refreshAuctions(true);tickMarketEvents();tickClientOrders();marketTurn();competitorTurn();processListingsPerDay();applyDailyFinance();randomInspection();randomEvent();checkMissions();renderAll();saveGame()}
+function checkMissions(){MISSIONS.forEach(m=>{if(!game.missionsDone[m.id]&&m.check(game)){game.missionsDone[m.id]=true;m.apply(game);log(`Миссия выполнена: ${m.text} • Награда: ${m.reward}`);toast(`Выполнено: ${m.text}`)}})}
+function drawSpark(canvas,data){const ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height;ctx.clearRect(0,0,w,h);const min=Math.min(...data),max=Math.max(...data),range=Math.max(1,max-min);ctx.beginPath();data.forEach((v,i)=>{const x=(i/(data.length-1||1))*(w-8)+4;const y=h-((v-min)/range)*(h-10)-5;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.lineWidth=2;ctx.strokeStyle='#58b6ff';ctx.stroke()}
+function drawChart(){const c=document.getElementById('chart'),ctx=c.getContext('2d');const d1=game.stocks.TechCore.history,d2=game.stocks.CryptoX.history;const all=d1.concat(d2),min=Math.min(...all),max=Math.max(...all),range=Math.max(1,max-min);ctx.clearRect(0,0,c.width,c.height);ctx.strokeStyle='rgba(255,255,255,.08)';for(let i=1;i<4;i++){const y=i*(c.height/4);ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(c.width,y);ctx.stroke()}const line=(data,color)=>{ctx.beginPath();data.forEach((v,i)=>{const x=(i/(data.length-1||1))*(c.width-20)+10;const y=c.height-((v-min)/range)*(c.height-30)-12;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.lineWidth=3;ctx.strokeStyle=color;ctx.stroke()};line(d1,'#58b6ff');line(d2,'#79ffd4')}
+function el(id){return document.getElementById(id)}
+function renderTop(){el('avatarBox').textContent=game.avatar;el('levelTitle').textContent='Уровень '+game.level;el('xpBar').style.width=Math.min(100,(game.xp/(game.level*140))*100)+'%';el('xpText').textContent=`${Math.round(game.xp)} / ${game.level*140}`;el('moneyMain').textContent=fmt(game.money);el('cashSub').textContent='+'+fmt(game.passiveIncome)+' / день';el('repBox').textContent=Math.floor(game.rep);el('dayBox').textContent=game.day;el('seasonBox').textContent=season().name;el('ratingBox').textContent=game.rating.toFixed(1)+' ★';el('brandBox').textContent=game.brand||'Нет бренда';el('debtBox').textContent=fmt(Math.max(0,game.debt));el('debtDaysBox').textContent=game.debt>0?('Осталось дней: '+game.debtDays):'Нет кредита';el('districtBox').textContent=game.districtOwned?DISTRICTS.find(x=>x.id===game.districtOwned).name:'Нет';const evt=game.marketEvents[0];if(evt){el('eventTitle').textContent='🚨 '+evt.name;el('eventDesc').textContent=evt.text+' • Категория: '+categoryLabel(evt.cat)+' • x'+evt.mult.toFixed(2);el('eventTimer').textContent=evt.duration+' дн.';el('eventShortBox').textContent=evt.name}else{el('eventTitle').textContent='📊 Рынок спокоен';el('eventDesc').textContent='Пока без горячих событий. Лови обычный спрос.';el('eventTimer').textContent='—';el('eventShortBox').textContent='Без события'}}
+function renderProducts(){const box=el('productsGrid');box.innerHTML='';PRODUCTS.forEach(p=>{const buy=p.buy*currentBuyMod();const mult=categoryMult(p.cat);const card=document.createElement('div');card.className='product';card.innerHTML=`<div class="thumb">${p.icon}</div><div class="name">${p.name}</div><div class="meta">Закупка: ${fmt(buy)}</div><div class="meta">Категория: ${categoryLabel(p.cat)}</div><div class="mini-progress"><span style="width:${Math.min(100,mult*50)}%"></span></div><div class="meta">Спрос: x${mult.toFixed(2)} • от ${p.minDays} дн.</div><div style="height:10px"></div><button class="action-btn" ${game.money<buy?'disabled':''} onclick="buyProduct('${p.id}')">Купить</button>`;box.appendChild(card)})}
+function renderHomeOrders(){const box=el('homeOrders');box.innerHTML='';el('ordersCount').textContent=game.clientOrders.length;if(!game.clientOrders.length){box.innerHTML='<div class="order"><strong>Пока заказов нет</strong><div class="small-muted">Они появятся сами через несколько дней.</div></div>';return}game.clientOrders.forEach(o=>{const div=document.createElement('div');div.className='order';div.innerHTML=`<strong>${o.icon} ${o.name}</strong><div class="small-muted">Выплата: ${fmt(o.reward)}</div><div style="color:var(--red);margin-top:6px">До конца: ${o.days} дн.</div><div style="height:10px"></div><button class="action-btn" onclick="fulfillOrder('${o.id}')">Выполнить</button>`;box.appendChild(div)})}
+function renderTasks(){const box=el('taskStack');box.innerHTML='';const tasks=[{name:'Продать 5 товаров',cur:Math.min(5,game.productDeals%5),max:5,reward:'₽ 15 000'},{name:'Сделать 3 доставки',cur:Math.min(3,game.deliveriesDone%3),max:3,reward:'₽ 12 000'},{name:'Заработать ₽ 300 000',cur:Math.min(300000,game.totalEarned%300000),max:300000,reward:'₽ 20 000',money:true}];tasks.forEach(t=>{const pct=Math.max(4,Math.min(100,(t.cur/t.max)*100));const div=document.createElement('div');div.className='task';div.innerHTML=`<strong>${t.name}</strong><div class="mini-progress"><span style="width:${pct}%"></span></div><div class="small-muted">${t.money?fmt(t.cur)+' / '+fmt(t.max):t.cur+' / '+t.max} • ${t.reward}</div>`;box.appendChild(div)})}
+function renderFinanceSummary(){const box=el('financeSummary');box.innerHTML='';const income=game.totalEarned;const expenses=Math.max(0,(game.day*game.dailyExpenses)+(game.debt>0?(game.debt*0.15):0));const profit=Math.max(0,income-expenses);[['Выручка',fmt(income),'var(--green)'],['Расходы','-'+fmt(expenses),'var(--red)'],['Прибыль',fmt(profit),'var(--green)'],['Пассив / день',fmt(game.passiveIncome),'var(--gold)']].forEach(r=>{const div=document.createElement('div');div.className='finance';div.innerHTML=`<div class="row"><span>${r[0]}</span><strong style="color:${r[2]}">${r[1]}</strong></div>`;box.appendChild(div)})}
+function renderInventory(){el('inventoryCount').textContent=game.inventory.length;const box=el('inventoryGrid');box.innerHTML='';if(!game.inventory.length){box.innerHTML='<div class="product"><div class="name">Инвентарь пуст</div><div class="meta">Купи что-нибудь на главной.</div></div>';return}game.inventory.forEach(it=>{const card=document.createElement('div');card.className='product';card.innerHTML=`<div class="thumb">${it.icon}</div><div class="name">${it.name}</div><div class="meta">Куплен за: ${fmt(it.buy)}</div><div class="meta">База продажи: ${fmt(it.baseSell)}</div><div style="height:10px"></div><div class="actions3"><button class="action-btn" onclick="listItem(${it.uid}, false)">Выставить</button><button class="action-btn" onclick="listItem(${it.uid}, true)">Премиум</button><button class="action-btn" onclick="sendDelivery('${game.districtOwned || 'north'}')">Доставка</button></div>`;box.appendChild(card)})}
+function renderListings(){el('listingsCount').textContent=game.listings.length;const box=el('listingGrid');box.innerHTML='';if(!game.listings.length){box.innerHTML='<div class="product"><div class="name">Нет объявлений</div><div class="meta">Выставь товар из инвентаря.</div></div>';return}game.listings.forEach(it=>{const chance=clamp((it.demand*currentDemand()*categoryMult(it.cat)+sellBonus()+(it.promoted?0.12:0))*100,4,95);const card=document.createElement('div');card.className='product';card.innerHTML=`<div class="thumb">${it.icon}</div><div class="name">${it.name}</div><div class="meta">Цена: ${fmt(it.askPrice)}</div><div class="meta">На продаже: ${it.listedDays} дн.</div><div class="mini-progress"><span style="width:${chance}%"></span></div><div class="meta">Шанс продажи: ${chance.toFixed(0)}%</div><div style="height:10px"></div><div class="actions"><button class="action-btn" ${it.promoted?'disabled':''} onclick="boostListing(${it.uid})">${it.promoted?'Продвинуто':'Продвигать'}</button><button class="action-btn" onclick="cancelListing(${it.uid})">Снять</button></div>`;box.appendChild(card)})}
+function renderStocks(){const list=el('stocksList');list.innerHTML='';Object.entries(game.stocks).forEach(([name,s])=>{const delta=s.history.length>1?s.price-s.history[s.history.length-2]:0;const card=document.createElement('div');card.className='stock-card';card.innerHTML=`<div class="row"><div class="title">${name}</div><div class="badge">${delta>=0?'▲':'▼'} ${Math.abs(delta).toFixed(1)}</div></div><div style="font-size:24px;font-weight:900;margin-top:8px">${fmt(s.price)}</div><div class="small-muted">В портфеле: ${s.qty} шт.</div><canvas class="spark" width="220" height="48"></canvas><div class="actions"><button class="action-btn" ${game.money<s.price?'disabled':''} onclick="buyStock('${name}')">Купить</button><button class="action-btn" ${s.qty<=0?'disabled':''} onclick="sellStock('${name}')">Продать</button></div>`;list.appendChild(card);drawSpark(card.querySelector('canvas'),s.history)});drawChart()}
+function renderBlackMarket(){el('blackCooldown').textContent=game.blackMarketCooldown>0?('Через '+game.blackMarketCooldown+' дн.'):'Доступен';const list=el('blackList');list.innerHTML='';game.blackMarket.forEach(d=>{const card=document.createElement('div');card.className='market-card';card.innerHTML=`<div class="row"><div class="title">⚫ ${d.name}</div><div class="badge">${Math.round(d.risk*100)}%</div></div><div class="small-muted">Потенциал: x${d.reward.toFixed(2)} • ${categoryLabel(d.cat)}</div><div style="height:10px"></div><button class="action-btn" style="background:linear-gradient(90deg,#792a33,#4e111c)" ${game.blackMarketCooldown>0||game.money<d.base?'disabled':''} onclick="runBlackMarket('${d.id}')">Сделка за ${fmt(d.base)}</button>`;list.appendChild(card)})}
+function renderAuctions(){const list=el('auctionList');list.innerHTML='';if(!game.auctions.length){list.innerHTML='<div class="market-card"><div class="title">Пока пусто</div><div class="small-muted">Лоты появятся позже.</div></div>';return}game.auctions.forEach(a=>{const card=document.createElement('div');card.className='market-card';card.innerHTML=`<div class="row"><div class="title">🔨 ${a.icon} ${a.name}</div><div class="badge">${fmt(a.start)}</div></div><div class="small-muted">Рынок: ${fmt(a.market)} • ${categoryLabel(a.cat)}</div><div style="height:10px"></div><button class="action-btn" ${game.money<a.start?'disabled':''} onclick="bidAuction('${a.id}')">Ставка</button>`;list.appendChild(card)})}
+function renderDistricts(){const box=el('districtGrid');box.innerHTML='';DISTRICTS.forEach(d=>{const owned=game.districtOwned===d.id;const card=document.createElement('div');card.className='district';card.innerHTML=`<div class="row"><div class="name">🏙️ ${d.name}</div><div class="badge">${owned?'Твой район':fmt(d.rent)}</div></div><div class="desc">${d.desc}</div><div class="small-muted">Спрос x${d.demand.toFixed(2)} • премиум x${d.elite.toFixed(2)}</div><div style="height:10px"></div><div class="actions"><button class="action-btn" ${owned||game.money<d.rent?'disabled':''} onclick="chooseDistrict('${d.id}')">${owned?'Занят':'Занять'}</button><button class="action-btn" onclick="sendDelivery('${d.id}')">Доставка</button></div>`;box.appendChild(card)})}
+function renderDelivery(){const box=el('deliveryInfo');box.innerHTML='<div class="district"><div class="name">🚚 Как работает доставка</div><div class="desc">Доставка продаёт товар сразу, но есть риск срыва. Нужен товар в инвентаре. Районы с высоким спросом дают лучший выхлоп.</div></div>'}
+function renderBusiness(){const box=el('businessUpgrades');box.innerHTML='';BUSINESS.forEach(b=>{const owned=!!game.businessOwned[b.id],locked=b.req&&!game.businessOwned[b.req];const card=document.createElement('div');card.className='upgrade';card.innerHTML=`<div class="row"><div class="name">${owned?'✅ ':''}${b.name}</div><div class="badge">${owned?'Куплено':fmt(b.cost)}</div></div><div class="desc">${b.desc}</div><div class="small-muted">Пассив: ${fmt(b.income)}/день • бонус продаж: +${Math.round((b.sell||0)*100)}%</div><div style="height:10px"></div><button class="action-btn" ${owned||locked||game.money<b.cost?'disabled':''} onclick="buyBusiness('${b.id}')">${owned?'Уже есть':locked?'Сначала прошлый этап':'Купить'}</button>`;box.appendChild(card)})}
+function renderTeam(){const box=el('teamGrid');box.innerHTML='';TEAM.forEach(t=>{const owned=!!game.teamOwned[t.id];const card=document.createElement('div');card.className='upgrade';card.innerHTML=`<div class="row"><div class="name">${owned?'✅ ':''}${t.name}</div><div class="badge">${owned?'Нанят':fmt(t.cost)}</div></div><div class="desc">${t.desc}</div><div class="small-muted">З/п: ${fmt(t.salary)}/день</div><div style="height:10px"></div><button class="action-btn" ${owned||game.money<t.cost?'disabled':''} onclick="hire('${t.id}')">${owned?'В команде':'Нанять'}</button>`;box.appendChild(card)})}
+function renderOps(){const box=el('opsGrid');box.innerHTML='';OPS.forEach(o=>{const card=document.createElement('div');card.className='upgrade';card.innerHTML=`<div class="row"><div class="name">${o.id==='negotiation'?'🤝':'📣'} ${o.name}</div><div class="badge">${fmt(o.cost)}</div></div><div class="desc">${o.desc}</div><div class="small-muted">${o.id==='negotiation'?'Скидка на закупку':'Буст спроса'} • ${o.days} дн.</div><div style="height:10px"></div><button class="action-btn" ${game.money<o.cost?'disabled':''} onclick="useOp('${o.id}')">Запустить</button>`;box.appendChild(card)})}
+function renderOrders(){const list=el('ordersList');list.innerHTML='';if(!game.clientOrders.length){list.innerHTML='<div class="order-card"><div class="title">Заказов нет</div><div class="small-muted">Они появятся каждые несколько дней.</div></div>';return}game.clientOrders.forEach(o=>{const card=document.createElement('div');card.className='order-card';card.innerHTML=`<div class="row"><div class="title">📨 ${o.name}</div><div class="badge">${o.days} дн.</div></div><div class="small-muted">Выплата ${fmt(o.reward)} • штраф ${fmt(o.penalty)}</div><div style="height:10px"></div><button class="action-btn" onclick="fulfillOrder('${o.id}')">Выполнить</button>`;list.appendChild(card)})}
+function renderReviews(){const list=el('reviewsList');list.innerHTML='';game.reviews.forEach(r=>{const card=document.createElement('div');card.className='review-card';card.innerHTML=`<div class="row"><div class="title">⭐ ${r.name}</div><div class="badge">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</div></div><div class="small-muted">${r.text}</div>`;list.appendChild(card)})}
+function renderComps(){const list=el('compList');list.innerHTML='';game.competitors.forEach(c=>{const card=document.createElement('div');card.className='comp-card';card.innerHTML=`<div class="row"><div class="title">🏪 ${c.name}</div><div class="badge">${Math.round(c.power)} силы</div></div><div class="small-muted">${c.mood}</div>`;list.appendChild(card)})}
+function renderVip(){el('vipStatus').textContent=game.vipCooldown>0?('Через '+game.vipCooldown+' дн.'):'Доступен';el('vipList').innerHTML=`<div class="vip-card"><div class="row"><div class="title">💎 VIP-клиент</div><div class="badge">${game.vipCooldown>0?'Ждёт':'Сейчас'}</div></div><div class="small-muted">Редкая жирная сделка. Чем лучше бренд и рейтинг, тем выше шанс.</div><div style="height:10px"></div><button class="action-btn" ${game.vipCooldown>0?'disabled':''} onclick="tryVipDeal()">Попробовать сделку</button></div>`}
+function renderMissions(){const list=el('missionList');list.innerHTML='';MISSIONS.forEach(m=>{const done=!!game.missionsDone[m.id];const div=document.createElement('div');div.className='log';div.innerHTML=`<div class="row"><div><strong>${done?'🏆':'🎯'} ${m.text}</strong><div class="small-muted">Награда: ${m.reward}</div></div><div class="badge">${done?'Выполнено':'В процессе'}</div></div>`;list.appendChild(div)})}
+function renderPortfolio(){const list=el('portfolioList');list.innerHTML='';const entries=Object.entries(game.stocks).filter(([_,s])=>s.qty>0);if(!entries.length){list.innerHTML='<div class="finance"><div class="title">Портфель пуст</div><div class="small-muted">Купи акции в разделе Рынок+.</div></div>';return}entries.forEach(([name,s])=>{const div=document.createElement('div');div.className='finance';div.innerHTML=`<div class="row"><div><strong>${name}</strong><div class="small-muted">${s.qty} шт.</div></div><div class="badge">${fmt(s.qty*s.price)}</div></div><div style="height:10px"></div><div class="actions"><button class="action-btn" ${game.money<s.price?'disabled':''} onclick="buyStock('${name}')">+1 купить</button><button class="action-btn" onclick="sellStock('${name}')">-1 продать</button></div>`;list.appendChild(div)})}
+function renderFinance(){const list=el('financeList');list.innerHTML='';[['Пассив / день',fmt(game.passiveIncome)],['Расходы / день',fmt(game.dailyExpenses)],['Долг',fmt(Math.max(0,game.debt))],['Осталось дней',game.debt>0?game.debtDays:'—']].forEach(i=>{const div=document.createElement('div');div.className='finance';div.innerHTML=`<div class="row"><span>${i[0]}</span><strong>${i[1]}</strong></div>`;list.appendChild(div)});const controls=document.createElement('div');controls.className='finance';controls.innerHTML=`<div class="actions"><button class="action-btn" ${game.debt>0?'disabled':''} onclick="takeLoan()">Взять кредит</button><button class="action-btn" ${game.debt<=0?'disabled':''} onclick="payDebt()">Погасить часть</button></div>`;list.appendChild(controls)}
+function renderNews(){const list=el('newsList');list.innerHTML='';if(!game.news.length){list.innerHTML='<div class="log"><div class="small-muted">История пуста.</div></div>';return}game.news.slice(0,18).forEach(n=>{const div=document.createElement('div');div.className='log';div.innerHTML=`<div class="small-muted">${n}</div>`;list.appendChild(div)})}
+function renderAll(){renderTop();renderProducts();renderHomeOrders();renderTasks();renderFinanceSummary();renderInventory();renderListings();renderStocks();renderBlackMarket();renderAuctions();renderDistricts();renderDelivery();renderBusiness();renderTeam();renderOps();renderOrders();renderReviews();renderComps();renderVip();renderMissions();renderPortfolio();renderFinance();renderNews()}
+function saveGame(){localStorage.setItem(SAVE_KEY,JSON.stringify(game));toast('Сохранено')}
+function loadGame(){const raw=localStorage.getItem(SAVE_KEY);if(!raw){toast('Сейв не найден');return}Object.assign(game,JSON.parse(raw));refreshAuctions();refreshClientOrders();renderAll();toast('Загружено')}
+function exportSave(){const blob=new Blob([JSON.stringify(game,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='business_empire_neon_full_save.json';a.click();URL.revokeObjectURL(a.href);toast('Экспортировано')}
+function resetGame(){if(!confirm('Точно сбросить прогресс?'))return;localStorage.removeItem(SAVE_KEY);location.reload()}
+document.querySelectorAll('.nav-btn').forEach(btn=>btn.addEventListener('click',()=>switchScreen(btn.dataset.screen)));
+document.getElementById('setupModal').addEventListener('click',(e)=>{if(e.target.id==='setupModal')closeSetup()});
+(function init(){const raw=localStorage.getItem(SAVE_KEY);if(raw){try{Object.assign(game,JSON.parse(raw))}catch(e){}}else{log('Старт игры. Полная версия на новом неоновом шаблоне готова.')}refreshAuctions();refreshClientOrders();renderAll()})();
+
+</script>
+</body>
+</html>
